@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./style.css" />
+        <link rel="icon" href="./img/logooo.png" type="image/png" />
+        <title>Course project</title>
+    </head>
+    <body>
+        <div class="header-tab">
+            <button class="first-tab" onclick="showTab(event,'calculator')">Проміжок часу</button>
+            <button class="second-tab">Святкові дати</button>
+        </div>
+        <div id="calculator" class="all-calculator">
+            <div class="calculator-form">
+                <div class="main-date">
+                    <div>
+                        <label for="start-date">Початкова дата:</label>
+                        <input type="date" class="all-imput start-date" required />
+                    </div>
+                    <div>
+                        <label for="end-date">Кінцева дата:</label>
+                        <input type="date" class="all-imput end-date" required />
+                    </div>
+                    <div class="blok-time-interval">
+                        <label for="time-interval">Проміжок часу:</label>
+                        <div class="time-interval-buttons">
+                            <button class="week-button" value="week">Тиждень</button>
+                            <button class="month-button" value="month">Місяць</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="extra-date">
+                    <div>
+                        <label for="day-options">Опції днів:</label>
+                        <select class="all-imput day-options">
+                            <option value="all">Всі дні</option>
+                            <option value="weekdays">Будні дні</option>
+                            <option value="weekends">Вихідні дні</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="time-unit">Одиниця виміру:</label>
+                        <select class="all-imput time-unit">
+                            <option value="days">Дні</option>
+                            <option value="hours">Години</option>
+                            <option value="minutes">Хвилини</option>
+                            <option value="seconds">Секунди</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="fix-button">
+                    <button class="button" type="submit">Розрахувати</button>
+                </div>
+            </div>
+            <h2 class="all-rasult">Останні результати:</h2>
+            <table class="results-table">
+                <thead>
+                    <tr class="all-list">
+                        <th class="start-date-th">Початкова дата</th>
+                        <th>Кінцева дата</th>
+                        <th>Результат</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <script src="./index.js" type="module"></script>
+    </body>
+</html>
