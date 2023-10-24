@@ -9,9 +9,18 @@
     </head>
     <body>
         <div class="header-tab">
-            <button class="first-tab" onclick="showTab(event,'calculator')">Проміжок часу</button>
+            <button class="first-tab">Проміжок часу</button>
             <button class="second-tab">Святкові дати</button>
         </div>
+        <div class="block-language">
+            <div class="language-box">
+                <div class="language-img"></div>
+            </div>
+        </div>
+        <ul class="language-list">
+            <li class="ukr-img">УКР</li>
+            <li class="eng-img">АНЛ</li>
+        </ul>
         <div id="calculator" class="all-calculator">
             <div class="calculator-form">
                 <div class="main-date">
@@ -64,6 +73,36 @@
                     </tr>
                 </thead>
             </table>
+        </div>
+        <div class="test-tab">
+            <div class="second-tab-body">
+                <div>
+                    <label for="country-select">Вибір країни:</label>
+                    <select class="country-select">
+                        <option value="country1">Країна 1</option>
+                        <option value="country2">Країна 2</option>
+                        <option value="country3">Країна 3</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="year-select">Вибір року:</label>
+                    <select class="year-select">
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+                </div>
+                <button class="sort-button">Сортувати</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Назва свята</th>
+                        </tr>
+                    </thead>
+                    <tbody class="holidays-list"></tbody>
+                </table>
+            </div>
         </div>
 
         <script src="./index.js" type="module"></script>
