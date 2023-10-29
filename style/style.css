@@ -1,6 +1,14 @@
+@font-face {
+    font-family: "KharkivToneFont";
+    src: url("../fonts/Kharkiv\ Tone.ttf");
+    font-style: normal;
+}
+
 body {
     margin: 0;
     background-color: white;
+    font-family: "KharkivToneFont", sans-serif;
+    font-weight: 200;
 }
 
 .header-tab {
@@ -13,22 +21,24 @@ body {
 }
 
 .first-tab {
-    font-size: 16px;
+    font-size: 14px;
     width: 200px;
     height: 100%;
     border-radius: 20px 20px 1px 1px;
     color: #040f0f;
     border: 1px solid white;
     cursor: pointer;
+    font-family: "KharkivToneFont", sans-serif;
 }
 
 .second-tab {
-    font-size: 16px;
+    font-size: 14px;
     width: 200px;
     height: 100%;
     border-radius: 20px 20px 1px 1px;
     border: 1px solid white;
     cursor: pointer;
+    font-family: "KharkivToneFont", sans-serif;
 }
 
 .active {
@@ -36,6 +46,7 @@ body {
     border-bottom: none;
     transition: 1s;
     width: 75%;
+    font-size: 18px;
 }
 
 .language-list {
@@ -56,7 +67,7 @@ body {
     margin: 2px 0 5px 10px;
     width: 60px;
     height: 20px;
-    background-image: url(./img/flag-ukraine.jpg);
+    background-image: url(../img/flag-ukraine.jpg);
     text-align: center;
     border-radius: 20px;
     animation-name: move;
@@ -68,7 +79,7 @@ body {
     margin-left: 10px;
     width: 60px;
     height: 20px;
-    background-image: url(./img/flag-eng.jpg);
+    background-image: url(../img/flag-eng.jpg);
     text-align: center;
     border-radius: 20px;
     animation-name: move;
@@ -93,7 +104,7 @@ body {
 
 .language-img {
     margin-top: 10px;
-    background-image: url(./img/language.jpg);
+    background-image: url(../img/language.jpg);
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -116,7 +127,7 @@ body {
 }
 
 .calculator-form {
-    padding: 50px 0 50px 0;
+    padding: 40px 0 40px 0;
     height: 250px;
     margin: 0 auto;
     width: 1100px;
@@ -152,9 +163,20 @@ body {
     border-radius: 8px;
     text-align: center;
     border: 2px solid #be97c6;
+    font-family: "KharkivToneFont", sans-serif;
+}
+
+.end-date:disabled {
+    opacity: 0.5;
+}
+
+.button:disabled {
+    opacity: 0.5;
 }
 
 .time-interval-buttons {
+    margin-top: -10px;
+    margin-left: 10px;
     width: 220px;
     gap: 15px;
     display: flex;
@@ -175,6 +197,7 @@ body {
     border: 2px solid white;
     font-size: 16px;
     cursor: pointer;
+    font-family: "KharkivToneFont", sans-serif;
 }
 
 .month-button {
@@ -185,6 +208,7 @@ body {
     border: 2px solid white;
     font-size: 16px;
     cursor: pointer;
+    font-family: "KharkivToneFont", sans-serif;
 }
 
 .fix-button {
@@ -201,6 +225,7 @@ body {
     color: #040f0f;
     border: 2px solid #8661c1;
     cursor: pointer;
+    font-family: "KharkivToneFont", sans-serif;
 }
 
 .button:hover {
@@ -211,32 +236,50 @@ body {
 
 label {
     margin: 0;
-    font-size: 20px;
+    font-size: 18px;
     display: inline-block;
     width: 200px;
     color: #040f0f;
 }
 
 .all-rasult {
-    width: 225px;
-    margin: 30px 0 20px 50px;
+    text-align: center;
+    max-width: 1100px;
+    margin: 30px 0 0 50px;
     color: #040f0f;
-    border-bottom: 2px solid #be97c6;
+    font-size: 22px;
+}
+
+.botton-span {
+    margin-left: 20px;
+    color: #8661c1;
+    width: 100px;
+    letter-spacing: 4px;
 }
 
 .all-list {
-    font-size: 18px;
-    padding: 0 50px;
+    height: 150px;
+    margin-left: 50px;
+    font-size: 14px;
+    padding: 20px 50px 0 50px;
     width: 1000px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     color: #040f0f;
+    overflow: auto;
+    border: 2px solid #eef0eb;
+    border-radius: 20px;
 }
 
-.start-date-th {
-    display: flex;
-    flex-direction: column;
+.big-text-table {
+    color: #8661c1;
+    font-size: 16px;
+}
+
+.table-text {
+    font-size: 14px;
+    color: #040f0f;
 }
 
 .test-tab {
