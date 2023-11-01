@@ -139,14 +139,17 @@ button.addEventListener("click", () => {
     tableStartDateElement.textContent = startDateInput.value;
     tableStartDate.append(tableStartDateElement);
     tableStartDateElement.classList.add("table-text");
+    localStorage.setItem("StartDate", tableStartDateElement.textContent);
 
     const tableEndDateElement = document.createElement("p");
     tableEndDateElement.textContent = endDateInput.value;
     tableEndDate.append(tableEndDateElement);
     tableEndDateElement.classList.add("table-text");
+    localStorage.setItem("EndDate", tableEndDateElement.textContent);
 
     const tableRasultDateElement = document.createElement("p");
     tableRasultDateElement.textContent = span.textContent;
     tableRasultDate.append(tableRasultDateElement);
     tableRasultDateElement.classList.add("table-text");
+    localStorage.setItem("Rasult", tableRasultDateElement.textContent);
 });
