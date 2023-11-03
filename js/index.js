@@ -1,4 +1,5 @@
-import { addWeek, addMonth, subtractDates, subtractHours, subtractMinutes, subtractSeconds, countWorkdays, countWeekends } from "./date.js";
+import { addWeek, addMonth, subtractTime, countWorkdays, countWeekends } from "./date.js";
+import { storeResult } from "./localStorage.js";
 
 const startDateInput = document.querySelector(".start-date");
 const endDateInput = document.querySelector(".end-date");
@@ -8,10 +9,6 @@ const calculator = document.querySelector(".all-calculator");
 const test = document.querySelector(".test-tab ");
 const firstTab = document.querySelector(".first-tab");
 const secondTab = document.querySelector(".second-tab");
-const languageList = document.querySelector(".language-list");
-const languageBox = document.querySelector(".language-box");
-const blockLanguage = document.querySelector(".block-language ");
-const globe = document.querySelector(".language-img");
 const button = document.querySelector(".button");
 const span = document.querySelector(" .botton-span");
 const timeUnit = document.querySelector(".time-unit");
@@ -19,6 +16,39 @@ const dayOptions = document.querySelector(".day-options");
 const tableStartDate = document.querySelector(".start-date-th");
 const tableEndDate = document.querySelector(".end-date-th");
 const tableRasultDate = document.querySelector(".result-date-th");
+const ukr = document.querySelector(".ukr");
+const eng = document.querySelector(".eng");
+const showTable = document.querySelector(".show-table");
+
+function activateInput() {
+    if (startDateInput.value) {
+        endDateInput.disabled = false;
+    } else {
+        endDateInput.disabled = true;
+    }
+}
+
+function activeButton() {
+    if (endDateInput.value) {
+        button.disabled = false;
+    } else {
+        button.disabled = true;
+    }
+}
+
+function handleButtonClick(addData) {
+    endDateInput.disabled = false;
+    button.disabled = false;
+    const dateValue = startDateInput.value;
+    if (dateValue) {
+        const date = new Date(startDateInput.value);
+        endDateInput.valueAsDate = addData(date);
+    } else {
+        const today = new Date();
+        startDateInput.valueAsDate = today;
+        endDateInput.valueAsDate = addData(today);
+    }
+}
 
 firstTab.addEventListener("click", function () {
     calculator.style.display = "block";
@@ -34,122 +64,80 @@ secondTab.addEventListener("click", function () {
     firstTab.classList.remove("active");
 });
 
-function toggleLanguageList() {
-    blockLanguage.classList.add("active");
-    globe.classList.add("globe");
-    if (languageList.style.display === "block") {
-        languageList.style.display = "none";
-        blockLanguage.classList.remove("active");
-        globe.classList.remove("globe");
-    } else {
-        languageList.style.display = "block";
-    }
-}
+ukr.addEventListener("click", function () {
+    this.classList.add("active-list");
+    eng.classList.remove("active-list");
+});
 
-function activeInput() {
-    if (startDateInput.value) {
-        endDateInput.disabled = false;
-    } else {
-        endDateInput.disabled = true;
-    }
-}
-startDateInput.addEventListener("change", activeInput);
+eng.addEventListener("click", function () {
+    this.classList.add("active-list");
+    ukr.classList.remove("active-list");
+});
 
-function activeButton() {
-    if (endDateInput.value) {
-        button.disabled = false;
-    } else {
-        button.disabled = true;
-    }
-}
+startDateInput.addEventListener("change", activateInput);
+
 endDateInput.addEventListener("input", activeButton);
+
+endDateInput.addEventListener("input", function () {
+    startDateInput.max = endDateInput.value;
+});
 
 startDateInput.addEventListener("input", function () {
     endDateInput.min = startDateInput.value;
 });
 
-const newDate = new Date();
-const minDate = newDate.toISOString().split("T")[0];
-startDateInput.min = minDate;
+weekButton.addEventListener("click", () => handleButtonClick(addWeek));
 
-weekButton.addEventListener("click", () => {
-    endDateInput.disabled = false;
-    button.disabled = false;
-    const dateValue = startDateInput.value;
-    if (dateValue) {
-        const date = new Date(endDateInput.value || startDateInput.value);
-        endDateInput.valueAsDate = addWeek(date);
-    } else {
-        const today = new Date();
-        startDateInput.valueAsDate = today;
-        endDateInput.valueAsDate = addWeek(today);
-    }
-});
-
-monthButton.addEventListener("click", () => {
-    endDateInput.disabled = false;
-    button.disabled = false;
-    const dateValue = startDateInput.value;
-    if (dateValue) {
-        const date = new Date(endDateInput.value || startDateInput.value);
-        endDateInput.valueAsDate = addMonth(date);
-    } else {
-        const today = new Date();
-        startDateInput.valueAsDate = today;
-        endDateInput.valueAsDate = addMonth(today);
-    }
-});
-
-languageBox.addEventListener("click", toggleLanguageList);
-
-const tableStartDateElement = document.createElement("p");
-tableStartDateElement.textContent = startDateInput.value;
+monthButton.addEventListener("click", () => handleButtonClick(addMonth));
 
 button.addEventListener("click", () => {
+    showTable.style.display = "block";
     const firstDate = startDateInput.value;
     const secondDate = endDateInput.value;
     const unitValue = timeUnit.value;
     const optionsValue = dayOptions.value;
-    let result;
+
+    let timeDifference;
+    let workdays;
+    let weekends;
+
     if (unitValue === "days") {
-        const differenceInDays = subtractDates(firstDate, secondDate);
-        result = differenceInDays + "днів";
+        timeDifference = subtractTime(firstDate, secondDate, "days");
     } else if (unitValue === "hours") {
-        const differenceInHours = subtractHours(firstDate, secondDate);
-        result = differenceInHours + "годин";
+        timeDifference = subtractTime(firstDate, secondDate, "hours");
     } else if (unitValue === "minutes") {
-        const differenceInMinutes = subtractMinutes(firstDate, secondDate);
-        result = differenceInMinutes + "хвилин";
+        timeDifference = subtractTime(firstDate, secondDate, "minutes");
     } else if (unitValue === "seconds") {
-        const differenceInSeconds = subtractSeconds(firstDate, secondDate);
-        result = differenceInSeconds + "cекунд";
-    } else {
-        return null;
+        timeDifference = subtractTime(firstDate, secondDate, "seconds");
     }
+    let result = timeDifference;
+
     if (optionsValue === "weekdays") {
-        const weekdays = countWorkdays(firstDate, secondDate);
-        result += ` (${weekdays} будніх днів)`;
+        workdays = countWorkdays(firstDate, secondDate);
+        result = workdays;
     } else if (optionsValue === "weekends") {
-        const weekends = countWeekends(firstDate, secondDate);
-        result += ` (${weekends} вихідних днів)`;
+        weekends = countWeekends(firstDate, secondDate);
+        result = weekends;
     }
+
     span.textContent = result;
 
-    const tableStartDateElement = document.createElement("p");
-    tableStartDateElement.textContent = startDateInput.value;
-    tableStartDate.append(tableStartDateElement);
-    tableStartDateElement.classList.add("table-text");
-    localStorage.setItem("StartDate", tableStartDateElement.textContent);
+    function createElement(value, targetElement) {
+        const tableElement = document.createElement("strong");
+        tableElement.textContent = value;
+        tableElement.classList.add("table-text");
 
-    const tableEndDateElement = document.createElement("p");
-    tableEndDateElement.textContent = endDateInput.value;
-    tableEndDate.append(tableEndDateElement);
-    tableEndDateElement.classList.add("table-text");
-    localStorage.setItem("EndDate", tableEndDateElement.textContent);
+        if (targetElement.childNodes.length > 10) {
+            const childElement = targetElement.firstElementChild;
+            targetElement.replaceChild(tableElement, childElement);
+        } else {
+            targetElement.append(tableElement);
+        }
+    }
 
-    const tableRasultDateElement = document.createElement("p");
-    tableRasultDateElement.textContent = span.textContent;
-    tableRasultDate.append(tableRasultDateElement);
-    tableRasultDateElement.classList.add("table-text");
-    localStorage.setItem("Rasult", tableRasultDateElement.textContent);
+    createElement(firstDate, tableStartDate);
+    createElement(secondDate, tableEndDate);
+    createElement(span.textContent, tableRasultDate);
+
+    storeResult(firstDate, secondDate, span.textContent);
 });

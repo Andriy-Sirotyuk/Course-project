@@ -12,55 +12,22 @@ export function addMonth(date) {
     return selectedDate;
 }
 
-export function subtractDates(startDate, endDate) {
+export function subtractTime(startDate, endDate, unit) {
     const start = new Date(startDate);
     const end = new Date(endDate);
 
-    if (!isNaN(start) && !isNaN(end)) {
-        const differenceInMilliseconds = end - start;
-        const differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
-        return differenceInDays;
-    } else {
-        return null;
-    }
-}
-
-export function subtractHours(startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    if (!isNaN(start) && !isNaN(end)) {
-        const differenceInMilliseconds = end - start;
-        const differenceInHours = differenceInMilliseconds / (1000 * 60 * 60);
-        return differenceInHours;
-    } else {
-        return null;
-    }
-}
-
-export function subtractMinutes(startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    if (!isNaN(start) && !isNaN(end)) {
-        const differenceInMilliseconds = end - start;
-        const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
-        return differenceInMinutes;
-    } else {
-        return null;
-    }
-}
-
-export function subtractSeconds(startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    if (!isNaN(start) && !isNaN(end)) {
-        const differenceInMilliseconds = end - start;
-        const differenceInSeconds = differenceInMilliseconds / 1000;
-        return differenceInSeconds;
-    } else {
-        return null;
+    const differenceInMilliseconds = end - start;
+    switch (unit) {
+        case "days":
+            return differenceInMilliseconds / (1000 * 60 * 60 * 24);
+        case "hours":
+            return differenceInMilliseconds / (1000 * 60 * 60);
+        case "minutes":
+            return differenceInMilliseconds / (1000 * 60);
+        case "seconds":
+            return differenceInMilliseconds / 1000;
+        default:
+            return null;
     }
 }
 
