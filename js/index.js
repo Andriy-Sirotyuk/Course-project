@@ -16,9 +16,10 @@ const dayOptions = document.querySelector(".day-options");
 const tableStartDate = document.querySelector(".start-date-th");
 const tableEndDate = document.querySelector(".end-date-th");
 const tableRasultDate = document.querySelector(".result-date-th");
-const ukr = document.querySelector(".ukr");
-const eng = document.querySelector(".eng");
+
 const showTable = document.querySelector(".show-table");
+const countrySelect = document.querySelector(".country-select");
+const yearSelect = document.querySelector(".year-select");
 
 function activateInput() {
     if (startDateInput.value) {
@@ -28,7 +29,7 @@ function activateInput() {
     }
 }
 
-function activeButton() {
+function activateButton() {
     if (endDateInput.value) {
         button.disabled = false;
     } else {
@@ -53,37 +54,25 @@ function handleButtonClick(addData) {
 firstTab.addEventListener("click", function () {
     calculator.style.display = "block";
     test.style.display = "none";
-    this.classList.add("active");
-    secondTab.classList.remove("active");
+    this.classList.remove("active");
+    secondTab.classList.add("active");
 });
 
 secondTab.addEventListener("click", function () {
     calculator.style.display = "none";
     test.style.display = "block";
-    this.classList.add("active");
-    firstTab.classList.remove("active");
+    this.classList.remove("active");
+    firstTab.classList.add("active");
 });
-
-ukr.addEventListener("click", function () {
-    this.classList.add("active-list");
-    eng.classList.remove("active-list");
-});
-
-eng.addEventListener("click", function () {
-    this.classList.add("active-list");
-    ukr.classList.remove("active-list");
-});
-
-startDateInput.addEventListener("change", activateInput);
-
-endDateInput.addEventListener("input", activeButton);
 
 endDateInput.addEventListener("input", function () {
     startDateInput.max = endDateInput.value;
+    activateButton();
 });
 
 startDateInput.addEventListener("input", function () {
     endDateInput.min = startDateInput.value;
+    activateInput();
 });
 
 weekButton.addEventListener("click", () => handleButtonClick(addWeek));
@@ -141,3 +130,59 @@ button.addEventListener("click", () => {
 
     storeResult(firstDate, secondDate, span.textContent);
 });
+
+async function getCountries() {
+    try {
+        const response = await fetch(" https://calendarific.com/api/v2/countries?api_key=gADWRTJ80gz1poqtlCeYzfCf9Sbo8WDt");
+        if (!response.ok) {
+            throw new Error("Something went wrong with albims request");
+        }
+        const data = await response.json();
+        console.log(data);
+        const countriesList = data.response.countries;
+
+        countriesList.forEach(({ country_name }) => {
+            const option = document.createElement("option");
+            option.textContent = country_name;
+
+            countrySelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
+getCountries();
+for (let year = 2001; year <= 2049; year++) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    yearSelect.appendChild(option);
+}
+
+function activateYearsSlect() {
+    if (countrySelect.value) {
+        yearSelect.disabled = false;
+    } else {
+        yearSelect.disabled = true;
+    }
+}
+countrySelect.addEventListener("change", activateYearsSlect);
+
+const countrieData = countrySelect.value;
+const yearDara = yearSelect.value;
+
+async function getHolidays(countriesValue, yearValue) {
+    try {
+        const response = await fetch(` https://calendarific.com/api/v2/holidays?api_key=gADWRTJ80gz1poqtlCeYzfCf9Sbo8WDt&country=${countriesValue}&year=${yearValue}`);
+        if (!response.ok) {
+            throw new Error("Something went wrong with albims request");
+        }
+        const data = await response.json();
+        console.log(data);
+        const yearsList = data.response.holidays;
+        console.log(yearsList);
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
+await getHolidays(countrieData, yearDara);

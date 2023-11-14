@@ -12,11 +12,7 @@
             <header>
                 <div class="header-tab">
                     <button class="first-tab">Проміжок часу</button>
-                    <button class="second-tab">Святкові дати</button>
-                </div>
-                <div class="language-list">
-                    <p class="ukr">УКР</p>
-                    <p class="eng">АНГЛ</p>
+                    <button class="second-tab active">Святкові дати</button>
                 </div>
             </header>
             <div id="calculator" class="all-calculator">
@@ -76,31 +72,28 @@
             </div>
             <div class="test-tab">
                 <div class="second-tab-body">
-                    <div>
-                        <label for="country-select">Вибір країни:</label>
-                        <select class="country-select">
-                            <option value="country1">Країна 1</option>
-                            <option value="country2">Країна 2</option>
-                            <option value="country3">Країна 3</option>
-                        </select>
+                    <div class="header-select">
+                        <div class="chose-country">
+                            <label for="country-select">Вибір країни:</label>
+                            <select class="country-select select-castm">
+                                <option value="2023">оберіть країну</option>
+                            </select>
+                        </div>
+                        <div class="dotted-line"></div>
+                        <div class="chose-country">
+                            <label>Вибір року:</label>
+                            <select class="year-select select-castm" disabled>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label for="year-select">Вибір року:</label>
-                        <select class="year-select">
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                        </select>
-                    </div>
-                    <button class="sort-button">Сортувати</button>
                     <table>
-                        <thead>
-                            <tr>
+                        <thead class="header-holiddays">
+                            <tr class="holidays-list">
                                 <th>Дата</th>
                                 <th>Назва свята</th>
                             </tr>
                         </thead>
-                        <tbody class="holidays-list"></tbody>
                     </table>
                 </div>
             </div>
