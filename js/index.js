@@ -1,5 +1,6 @@
 import { addWeek, addMonth, subtractTime, countWorkdays, countWeekends } from "./date.js";
 import { storeResult } from "./localStorage.js";
+import { fetchCountriesData, getHolidaysByCountryAndYear } from "./api.js";
 
 const startDateInput = document.querySelector(".start-date");
 const endDateInput = document.querySelector(".end-date");
@@ -16,7 +17,8 @@ const dayOptions = document.querySelector(".day-options");
 const tableStartDate = document.querySelector(".start-date-th");
 const tableEndDate = document.querySelector(".end-date-th");
 const tableRasultDate = document.querySelector(".result-date-th");
-
+const optionCountry = document.querySelector(".option-country");
+const optionYear = document.querySelector(".option-year");
 const showTable = document.querySelector(".show-table");
 const countrySelect = document.querySelector(".country-select");
 const yearSelect = document.querySelector(".year-select");
@@ -131,27 +133,25 @@ button.addEventListener("click", () => {
     storeResult(firstDate, secondDate, span.textContent);
 });
 
+function displayCountries(countriesList) {
+    countriesList.forEach(({ country_name }) => {
+        const option = document.createElement("option");
+        option.textContent = country_name;
+        countrySelect.appendChild(option);
+    });
+}
+
 async function getCountries() {
     try {
-        const response = await fetch(" https://calendarific.com/api/v2/countries?api_key=gADWRTJ80gz1poqtlCeYzfCf9Sbo8WDt");
-        if (!response.ok) {
-            throw new Error("Something went wrong with albims request");
-        }
-        const data = await response.json();
+        const data = await fetchCountriesData();
         console.log(data);
         const countriesList = data.response.countries;
-
-        countriesList.forEach(({ country_name }) => {
-            const option = document.createElement("option");
-            option.textContent = country_name;
-
-            countrySelect.appendChild(option);
-        });
-    } catch (error) {
-        console.error("Error: ", error);
-    }
+        displayCountries(countriesList);
+    } catch (error) {}
 }
+
 getCountries();
+
 for (let year = 2001; year <= 2049; year++) {
     const option = document.createElement("option");
     option.value = year;
@@ -168,21 +168,11 @@ function activateYearsSlect() {
 }
 countrySelect.addEventListener("change", activateYearsSlect);
 
-const countrieData = countrySelect.value;
-const yearDara = yearSelect.value;
-
-async function getHolidays(countriesValue, yearValue) {
-    try {
-        const response = await fetch(` https://calendarific.com/api/v2/holidays?api_key=gADWRTJ80gz1poqtlCeYzfCf9Sbo8WDt&country=${countriesValue}&year=${yearValue}`);
-        if (!response.ok) {
-            throw new Error("Something went wrong with albims request");
-        }
-        const data = await response.json();
-        console.log(data);
-        const yearsList = data.response.holidays;
-        console.log(yearsList);
-    } catch (error) {
-        console.error("Error: ", error);
-    }
+const country = optionCountry.value;
+const year = optionYear.value;
+try {
+    const holidays = await getHolidaysByCountryAndYear(country, year);
+    console.log(holidays);
+} catch (error) {
+    console.error("Error:", error.message);
 }
-await getHolidays(countrieData, yearDara);
