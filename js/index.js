@@ -19,8 +19,6 @@ const tableStartDate = document.querySelector(".start-date-th");
 const tableEndDate = document.querySelector(".end-date-th");
 const tableRasultDate = document.querySelector(".result-date-th");
 const showTable = document.querySelector(".show-table");
-const selebretionDate = document.querySelector(".selebretion-date");
-const nameDate = document.querySelector(".name-date");
 const headerHoliddays = document.querySelector(".header-holiddays");
 const sortDdata = document.querySelector(".sort-data");
 export const countrySelect = document.querySelector(".country-select");
@@ -207,8 +205,8 @@ async function getCountries() {
         const countriesList = data.response.countries;
 
         fillCountriesSelect(countriesList);
+        addYearSelectListener();
         addCountrySelectListener();
-        addYearSelectListener;
     } catch (error) {
         showAlert(error.message, "danger");
     }
