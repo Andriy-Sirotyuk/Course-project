@@ -319,6 +319,7 @@ label {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    background-color: #fefce8;
 }
 
 .dotted-line {
@@ -336,7 +337,7 @@ label {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background-color: #bbf7d0;
+    background: linear-gradient(to right, #2dd4bf, #115e59);
     border-radius: 30px;
     border: 2px dotted #15803d;
 }
@@ -351,21 +352,119 @@ label {
 }
 
 .header-holiddays {
-    margin-top: 50px;
-    width: 1200px;
+    margin-top: 10px;
+    width: 1250px;
     display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 350px;
+    gap: 20px;
+}
+
+.full-second-teble {
+    margin-left: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.teble-name-text {
+    font-size: 20px;
+    text-align: center;
+    width: 350px;
+    color: #15803d;
+    background-color: #ccfbf1;
+    padding: 10px;
+    border-radius: 40px;
+}
+
+.teble-second-text {
+    width: 700px;
+
+    margin-left: 30px;
+    align-self: start;
+    border: 2px dotted #15803d;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.table-logo {
+    margin-top: 20px;
+    width: 1400px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #ca8a04;
+    font-size: 20px;
+}
+
+.logo-slebr {
+    margin-left: 200px;
 }
 
 .holidays-list {
+    width: 1050px;
     padding: 20px;
-    margin: 0 auto;
+    margin: 0 100px 0 100px;
     display: flex;
     flex-direction: row;
-    gap: 535px;
-    color: #8661c1;
+    justify-content: space-around;
     font-size: 20px;
-    background-color: #eef0eb;
     border-radius: 20px;
+}
+
+.name-date {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.selebretion-date {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.alert-tep {
+    left: 60%;
+    background-color: #f87171;
+    border: 3px solid#7f1d1d;
+    width: 400px;
+    height: 20px;
+    padding: 20px;
+    position: absolute;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 20px;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+.sort-data {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-image: url(../img/arrow.png);
+    border: 2px solid #115e59;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes spin {
@@ -387,5 +486,153 @@ label {
     to {
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    header {
+        width: 250px;
+        padding: 0;
+        margin-left: 60px;
+    }
+
+    .all-calculator {
+        margin: 0 15px;
+        width: 450px;
+    }
+
+    .first-tab {
+        width: 125px;
+        font-size: 14px;
+    }
+
+    .second-tab {
+        width: 125px;
+    }
+
+    .all-imput {
+        width: 120px;
+        font-size: 12px;
+        height: 30px;
+    }
+
+    label {
+        width: 100px;
+        font-size: 14px;
+    }
+
+    .calculator-form {
+        height: 350px;
+        padding: 0;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1px;
+    }
+
+    .week-button {
+        width: 70px;
+        font-size: 10px;
+        height: 30px;
+    }
+
+    .month-button {
+        width: 70px;
+        font-size: 10px;
+        height: 30px;
+    }
+
+    .main-date {
+        margin: 50px 0 0 25px;
+        width: 250px;
+        gap: 5px;
+    }
+
+    .extra-date {
+        text-align: center;
+        margin-top: 50px;
+        width: 170px;
+        gap: 25px;
+    }
+
+    .button {
+        width: 200px;
+        height: 40px;
+        margin-left: 130px;
+        margin-bottom: 20px;
+    }
+
+    .blok-time-interval {
+        margin-top: 30px;
+    }
+
+    .all-rasult {
+        width: 300px;
+        margin: 0 auto;
+        font-size: 21px;
+        margin-top: 20px;
+    }
+
+    .all-list {
+        width: 400px;
+        gap: 10px;
+        margin: 0 auto;
+        margin-top: 40px;
+        padding: 0 15px;
+    }
+
+    .big-text-table {
+        font-size: 14px;
+    }
+
+    .table-text {
+        font-size: 12px;
+    }
+
+    .test-tab {
+        width: 450px;
+        margin: 0 15px;
+    }
+
+    .chose-country {
+        width: 100px;
+        gap: 5px;
+    }
+
+    .header-select {
+        width: 400px;
+        height: 100px;
+        padding: 0 25px;
+        font-size: 14px;
+    }
+
+    .select-castm {
+        width: 100px;
+        font-size: 12px;
+        height: 20px;
+        padding: 1px;
+    }
+
+    .table-logo {
+        width: 450px;
+        font-size: 16px;
+    }
+
+    .header-holiddays {
+        width: 430px;
+        padding: 0 10px;
+    }
+
+    .teble-name-text {
+        width: 150px;
+        font-size: 14px;
+    }
+
+    .full-second-teble {
+        margin-left: 0;
+    }
+
+    .teble-second-text {
+        width: 300px;
+        font-size: 14px;
     }
 }

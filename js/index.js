@@ -1,6 +1,7 @@
 import { addWeek, addMonth, subtractTime, countWorkdays, countWeekends } from "./date.js";
 import { storeResult } from "./localStorage.js";
 import { fetchCountriesData, getHolidaysByCountryAndYear } from "./api.js";
+import { showAlert } from "./alert.js";
 
 const startDateInput = document.querySelector(".start-date");
 const endDateInput = document.querySelector(".end-date");
@@ -17,11 +18,13 @@ const dayOptions = document.querySelector(".day-options");
 const tableStartDate = document.querySelector(".start-date-th");
 const tableEndDate = document.querySelector(".end-date-th");
 const tableRasultDate = document.querySelector(".result-date-th");
-const optionCountry = document.querySelector(".option-country");
-const optionYear = document.querySelector(".option-year");
 const showTable = document.querySelector(".show-table");
-const countrySelect = document.querySelector(".country-select");
-const yearSelect = document.querySelector(".year-select");
+const selebretionDate = document.querySelector(".selebretion-date");
+const nameDate = document.querySelector(".name-date");
+const headerHoliddays = document.querySelector(".header-holiddays");
+const sortDdata = document.querySelector(".sort-data");
+export const countrySelect = document.querySelector(".country-select");
+export const yearSelect = document.querySelector(".year-select");
 
 function activateInput() {
     if (startDateInput.value) {
@@ -133,21 +136,82 @@ button.addEventListener("click", () => {
     storeResult(firstDate, secondDate, span.textContent);
 });
 
-function displayCountries(countriesList) {
-    countriesList.forEach(({ country_name }) => {
+function fillCountriesSelect(countriesList) {
+    for (const countryData of countriesList) {
+        const isoCode = countryData["iso-3166"];
+        const countryName = countryData["country_name"];
+
         const option = document.createElement("option");
-        option.textContent = country_name;
+        option.value = countryName;
+        option.textContent = countryName;
+        option.setAttribute("data-iso", isoCode);
+
         countrySelect.appendChild(option);
+    }
+}
+let sortAsc = true;
+
+async function handleCountrySelect() {
+    const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+    const selectedIsoCode = selectedOption.getAttribute("data-iso");
+    const selectedYear = Number(yearSelect.value);
+
+    const holidays = await getHolidaysByCountryAndYear(selectedIsoCode, selectedYear);
+    const sortedHolidays = sortHolidaysByDate(holidays, sortAsc);
+
+    // Очистіть список перед виведенням нових свят
+    headerHoliddays.innerHTML = "";
+
+    for (const eventData of sortedHolidays) {
+        const row = document.createElement("tr");
+        row.classList.add("full-second-teble");
+
+        // Створення нових комірок (td) для назви та опису
+        const nameElement = document.createElement("td");
+        nameElement.classList.add("teble-name-text");
+        const descriptionElement = document.createElement("td");
+        descriptionElement.classList.add("teble-second-text");
+
+        // Заповнення вмісту DOM-елементів
+        nameElement.textContent = eventData.name;
+        descriptionElement.textContent = eventData.description;
+
+        // Додавання елементів на сторінку
+        row.appendChild(nameElement);
+        row.appendChild(descriptionElement);
+
+        headerHoliddays.appendChild(row);
+    }
+
+    console.log("Selected ISO Code:", selectedIsoCode);
+}
+
+function sortHolidaysByDate(holidays, asc) {
+    return holidays.sort((a, b) => {
+        const dateA = new Date(a.date.iso);
+        const dateB = new Date(b.date.iso);
+
+        return asc ? dateA - dateB : dateB - dateA;
     });
 }
 
+sortDdata.addEventListener("click", () => {
+    sortAsc = !sortAsc;
+    handleCountrySelect();
+    sortDdata.classList.toggle("rotate");
+});
 async function getCountries() {
     try {
         const data = await fetchCountriesData();
         console.log(data);
         const countriesList = data.response.countries;
-        displayCountries(countriesList);
-    } catch (error) {}
+
+        fillCountriesSelect(countriesList);
+        addCountrySelectListener();
+        addYearSelectListener;
+    } catch (error) {
+        showAlert(error.message, "danger");
+    }
 }
 
 getCountries();
@@ -159,20 +223,19 @@ for (let year = 2001; year <= 2049; year++) {
     yearSelect.appendChild(option);
 }
 
-function activateYearsSlect() {
+function activateYearsSelect() {
     if (countrySelect.value) {
         yearSelect.disabled = false;
     } else {
         yearSelect.disabled = true;
     }
 }
-countrySelect.addEventListener("change", activateYearsSlect);
 
-const country = optionCountry.value;
-const year = optionYear.value;
-try {
-    const holidays = await getHolidaysByCountryAndYear(country, year);
-    console.log(holidays);
-} catch (error) {
-    console.error("Error:", error.message);
+function addCountrySelectListener() {
+    countrySelect.addEventListener("change", handleCountrySelect);
+    countrySelect.addEventListener("change", activateYearsSelect);
+}
+
+function addYearSelectListener() {
+    yearSelect.addEventListener("change", handleCountrySelect);
 }
