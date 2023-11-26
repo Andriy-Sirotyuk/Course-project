@@ -1,4 +1,4 @@
-import { addWeek, addMonth, subtractTime, countWorkdays, countWeekends } from "./date.js";
+import { addWeek, addMonth, subtractTime, countWorkdays, countWeekends, formatDate } from "./date.js";
 import { storeResult } from "./localStorage.js";
 import { fetchCountriesData, getHolidaysByCountryAndYear } from "./api.js";
 import { showAlert } from "./alert.js";
@@ -92,17 +92,22 @@ button.addEventListener("click", () => {
     let timeDifference;
     let workdays;
     let weekends;
+    let unit;
 
     if (unitValue === "days") {
         timeDifference = subtractTime(firstDate, secondDate, "days");
+        unit = "днів";
     } else if (unitValue === "hours") {
         timeDifference = subtractTime(firstDate, secondDate, "hours");
+        unit = "годин";
     } else if (unitValue === "minutes") {
         timeDifference = subtractTime(firstDate, secondDate, "minutes");
+        unit = "хвилин";
     } else if (unitValue === "seconds") {
         timeDifference = subtractTime(firstDate, secondDate, "seconds");
+        unit = "секунд";
     }
-    let result = timeDifference;
+    let result = `${timeDifference} ${unit}`;
 
     if (optionsValue === "weekdays") {
         workdays = countWorkdays(firstDate, secondDate);
@@ -127,11 +132,14 @@ button.addEventListener("click", () => {
         }
     }
 
-    createElement(firstDate, tableStartDate);
-    createElement(secondDate, tableEndDate);
-    createElement(span.textContent, tableRasultDate);
+    const formattedFirstDate = formatDate(new Date(firstDate));
+    const formattedSecondDate = formatDate(new Date(secondDate));
 
-    storeResult(firstDate, secondDate, span.textContent);
+    createElement(formattedFirstDate, tableStartDate);
+    createElement(formattedSecondDate, tableEndDate);
+    createElement(result, tableRasultDate);
+
+    storeResult(firstDate, secondDate, result);
 });
 
 function fillCountriesSelect(countriesList) {
@@ -157,24 +165,20 @@ async function handleCountrySelect() {
     const holidays = await getHolidaysByCountryAndYear(selectedIsoCode, selectedYear);
     const sortedHolidays = sortHolidaysByDate(holidays, sortAsc);
 
-    // Очистіть список перед виведенням нових свят
     headerHoliddays.innerHTML = "";
 
     for (const eventData of sortedHolidays) {
         const row = document.createElement("tr");
         row.classList.add("full-second-teble");
 
-        // Створення нових комірок (td) для назви та опису
         const nameElement = document.createElement("td");
         nameElement.classList.add("teble-name-text");
         const descriptionElement = document.createElement("td");
         descriptionElement.classList.add("teble-second-text");
 
-        // Заповнення вмісту DOM-елементів
         nameElement.textContent = eventData.name;
         descriptionElement.textContent = eventData.description;
 
-        // Додавання елементів на сторінку
         row.appendChild(nameElement);
         row.appendChild(descriptionElement);
 
