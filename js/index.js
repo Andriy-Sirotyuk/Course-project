@@ -68,12 +68,12 @@ secondTab.addEventListener("click", function () {
     firstTab.classList.add("active");
 });
 
-endDateInput.addEventListener("input", function () {
+endDateInput.addEventListener("change", function () {
     startDateInput.max = endDateInput.value;
     activateButton();
 });
 
-startDateInput.addEventListener("input", function () {
+startDateInput.addEventListener("change", function () {
     endDateInput.min = startDateInput.value;
     activateInput();
 });
@@ -81,6 +81,34 @@ startDateInput.addEventListener("input", function () {
 weekButton.addEventListener("click", () => handleButtonClick(addWeek));
 
 monthButton.addEventListener("click", () => handleButtonClick(addMonth));
+
+function createElement(value, targetElement) {
+    const tableElement = document.createElement("strong");
+    tableElement.textContent = value;
+    tableElement.classList.add("table-text");
+
+    if (targetElement.childNodes.length > 10) {
+        const childElement = targetElement.firstElementChild;
+        targetElement.replaceChild(tableElement, childElement);
+    } else {
+        targetElement.append(tableElement);
+    }
+}
+
+function getUnitName(unitValue) {
+    switch (unitValue) {
+        case "days":
+            return "днів";
+        case "hours":
+            return "годин";
+        case "minutes":
+            return "хвилин";
+        case "seconds":
+            return "секунд";
+        default:
+            return "";
+    }
+}
 
 button.addEventListener("click", () => {
     showTable.style.display = "block";
@@ -94,19 +122,9 @@ button.addEventListener("click", () => {
     let weekends;
     let unit;
 
-    if (unitValue === "days") {
-        timeDifference = subtractTime(firstDate, secondDate, "days");
-        unit = "днів";
-    } else if (unitValue === "hours") {
-        timeDifference = subtractTime(firstDate, secondDate, "hours");
-        unit = "годин";
-    } else if (unitValue === "minutes") {
-        timeDifference = subtractTime(firstDate, secondDate, "minutes");
-        unit = "хвилин";
-    } else if (unitValue === "seconds") {
-        timeDifference = subtractTime(firstDate, secondDate, "seconds");
-        unit = "секунд";
-    }
+    timeDifference = subtractTime(firstDate, secondDate, unitValue);
+    unit = getUnitName(unitValue);
+
     let result = `${timeDifference} ${unit}`;
 
     if (optionsValue === "weekdays") {
@@ -118,20 +136,6 @@ button.addEventListener("click", () => {
     }
 
     span.textContent = result;
-
-    function createElement(value, targetElement) {
-        const tableElement = document.createElement("strong");
-        tableElement.textContent = value;
-        tableElement.classList.add("table-text");
-
-        if (targetElement.childNodes.length > 10) {
-            const childElement = targetElement.firstElementChild;
-            targetElement.replaceChild(tableElement, childElement);
-        } else {
-            targetElement.append(tableElement);
-        }
-    }
-
     const formattedFirstDate = formatDate(new Date(firstDate));
     const formattedSecondDate = formatDate(new Date(secondDate));
 

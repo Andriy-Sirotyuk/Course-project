@@ -1,11 +1,13 @@
 export function storeResult(startDate, endDate, result) {
     const storedResults = JSON.parse(localStorage.getItem("results")) || [];
 
+    const MAX_STORED_RESULTS = 10;
+
     const entry = { startDate, endDate, result };
 
     storedResults.push(entry);
 
-    if (storedResults.length > 10) {
+    if (storedResults.length > MAX_STORED_RESULTS) {
         storedResults.shift();
     }
 
