@@ -24,6 +24,8 @@ const sortDdata = document.querySelector(".sort-data");
 export const countrySelect = document.querySelector(".country-select");
 export const yearSelect = document.querySelector(".year-select");
 
+export const MAX_STORED_RESULTS = 10;
+
 function activateInput() {
     if (startDateInput.value) {
         endDateInput.disabled = false;
@@ -87,7 +89,7 @@ function createElement(value, targetElement) {
     tableElement.textContent = value;
     tableElement.classList.add("table-text");
 
-    if (targetElement.childNodes.length > 10) {
+    if (targetElement.childNodes.length > MAX_STORED_RESULTS) {
         const childElement = targetElement.firstElementChild;
         targetElement.replaceChild(tableElement, childElement);
     } else {
