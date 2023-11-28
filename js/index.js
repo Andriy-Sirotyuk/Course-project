@@ -224,12 +224,15 @@ async function getCountries() {
 
 getCountries();
 
-for (let year = 2001; year <= 2049; year++) {
-    const option = document.createElement("option");
-    option.value = year;
-    option.textContent = year;
-    yearSelect.appendChild(option);
+function populateYearSelect() {
+    for (let year = 2001; year <= 2049; year++) {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+    }
 }
+populateYearSelect();
 
 function activateYearsSelect() {
     if (countrySelect.value) {
@@ -240,8 +243,12 @@ function activateYearsSelect() {
 }
 
 function addCountrySelectListener() {
-    countrySelect.addEventListener("change", handleCountrySelect);
-    countrySelect.addEventListener("change", activateYearsSelect);
+    countrySelect.addEventListener("change", handleCountrySelectAndActivateYears);
+}
+
+function handleCountrySelectAndActivateYears() {
+    handleCountrySelect();
+    activateYearsSelect();
 }
 
 function addYearSelectListener() {
