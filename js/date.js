@@ -33,14 +33,18 @@ export function subtractTime(startDate, endDate, unit) {
     }
 }
 
+export function isWeekend(date) {
+    const dayOfWeek = date.getDay();
+    return dayOfWeek === 0 || dayOfWeek === 6;
+}
+
 export function countWorkdays(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     let workdays = 0;
 
     while (start <= end) {
-        const dayOfWeek = start.getDay();
-        if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        if (!isWeekend(start)) {
             workdays++;
         }
         start.setDate(start.getDate() + 1);
@@ -55,8 +59,7 @@ export function countWeekends(startDate, endDate) {
     let weekends = 0;
 
     while (start <= end) {
-        const dayOfWeek = start.getDay();
-        if (dayOfWeek === 0 || dayOfWeek === 6) {
+        if (isWeekend(start)) {
             weekends++;
         }
         start.setDate(start.getDate() + 1);
