@@ -3,69 +3,105 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./style.css" />
+        <link rel="stylesheet" href="./style/style.css" />
         <link rel="icon" href="./img/logooo.png" type="image/png" />
         <title>Course project</title>
     </head>
     <body>
-        <div class="header-tab">
-            <button class="first-tab" onclick="showTab(event,'calculator')">Проміжок часу</button>
-            <button class="second-tab">Святкові дати</button>
-        </div>
-        <div id="calculator" class="all-calculator">
-            <div class="calculator-form">
-                <div class="main-date">
-                    <div>
-                        <label for="start-date">Початкова дата:</label>
-                        <input type="date" class="all-imput start-date" required />
-                    </div>
-                    <div>
-                        <label for="end-date">Кінцева дата:</label>
-                        <input type="date" class="all-imput end-date" required />
-                    </div>
-                    <div class="blok-time-interval">
-                        <label for="time-interval">Проміжок часу:</label>
-                        <div class="time-interval-buttons">
-                            <button class="week-button" value="week">Тиждень</button>
-                            <button class="month-button" value="month">Місяць</button>
+        <div>
+            <header>
+                <div class="header-tab">
+                    <button class="first-tab">Проміжок часу</button>
+                    <button class="second-tab active">Святкові дати</button>
+                </div>
+            </header>
+            <div id="calculator" class="all-calculator">
+                <div class="calculator-form">
+                    <div class="main-date">
+                        <div>
+                            <label>Початкова дата:</label>
+                            <input type="date" class="all-imput start-date" required />
+                        </div>
+                        <div>
+                            <label>Кінцева дата:</label>
+                            <input type="date" class="all-imput end-date" required disabled />
+                        </div>
+                        <div class="blok-time-interval">
+                            <label for="time-interval">Проміжок часу:</label>
+                            <div class="time-interval-buttons">
+                                <button class="week-button" value="week">Тиждень</button>
+                                <button class="month-button" value="month">Місяць</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="extra-date">
-                    <div>
-                        <label for="day-options">Опції днів:</label>
-                        <select class="all-imput day-options">
-                            <option value="all">Всі дні</option>
-                            <option value="weekdays">Будні дні</option>
-                            <option value="weekends">Вихідні дні</option>
-                        </select>
+                    <div class="extra-date">
+                        <div>
+                            <label for="day-options">Опції днів:</label>
+                            <select class="all-imput day-options">
+                                <option value="all">Всі дні</option>
+                                <option value="weekdays">Будні дні</option>
+                                <option value="weekends">Вихідні дні</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="time-unit">Одиниця виміру:</label>
+                            <select class="all-imput time-unit">
+                                <option value="days">Дні</option>
+                                <option value="hours">Години</option>
+                                <option value="minutes">Хвилини</option>
+                                <option value="seconds">Секунди</option>
+                            </select>
+                        </div>
                     </div>
-                    <div>
-                        <label for="time-unit">Одиниця виміру:</label>
-                        <select class="all-imput time-unit">
-                            <option value="days">Дні</option>
-                            <option value="hours">Години</option>
-                            <option value="minutes">Хвилини</option>
-                            <option value="seconds">Секунди</option>
-                        </select>
+                    <div class="fix-button">
+                        <button class="button" type="submit" disabled>Розрахувати</button>
                     </div>
                 </div>
-                <div class="fix-button">
-                    <button class="button" type="submit">Розрахувати</button>
+                <div class="show-table">
+                    <h2 class="all-rasult">Останні результати:<span class="botton-span"></span></h2>
+                    <table class="results-table">
+                        <thead>
+                            <tr class="all-list">
+                                <th class="start-date-th big-text-table">Початкова дата</th>
+                                <th class="end-date-th big-text-table">Кінцева дата</th>
+                                <th class="result-date-th big-text-table">Результат</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
-            <h2 class="all-rasult">Останні результати:</h2>
-            <table class="results-table">
-                <thead>
-                    <tr class="all-list">
-                        <th class="start-date-th">Початкова дата</th>
-                        <th>Кінцева дата</th>
-                        <th>Результат</th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="test-tab">
+                <div class="second-tab-body">
+                    <div class="header-select">
+                        <div class="chose-country">
+                            <label for="country-select">Вибір країни:</label>
+                            <select class="country-select select-castm">
+                                <option class="option-country">оберіть країну</option>
+                            </select>
+                        </div>
+                        <div class="dotted-line"></div>
+                        <div class="chose-country">
+                            <label>Вибір року:</label>
+                            <select class="year-select select-castm" disabled>
+                                <option class="option-year" value="2023">2023</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-logo">
+                        <p>Дата</p>
+                        <p class="logo-slebr">Назва свята</p>
+                        <div class="sort-data"></div>
+                    </div>
+
+                    <table>
+                        <thead class="header-holiddays">
+                            <tr class="holidays-list"></tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <script src="./index.js" type="module"></script>
+        <script src="./js/index.js" type="module"></script>
     </body>
 </html>
