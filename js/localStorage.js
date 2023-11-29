@@ -1,4 +1,4 @@
-import { MAX_STORED_RESULTS } from "./index.js";
+export const MAX_STORED_RESULTS = 10;
 
 export function storeResult(startDate, endDate, result) {
     const storedResults = JSON.parse(localStorage.getItem("results")) || [];

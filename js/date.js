@@ -1,5 +1,3 @@
-import { MAX_STORED_RESULTS } from "./index.js";
-
 export function addWeek(date) {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() + 7);
@@ -73,8 +71,8 @@ export function formatDate(date) {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    const formattedDay = day < MAX_STORED_RESULTS ? `0${day}` : day;
-    const formattedMonth = month < MAX_STORED_RESULTS ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    const formattedMonth = month < 10 ? `0${month}` : month;
 
     const formattedDate = `${formattedDay}.${formattedMonth}.${year}`;
 

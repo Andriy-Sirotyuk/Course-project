@@ -1,5 +1,5 @@
 import { addWeek, addMonth, subtractTime, countWorkdays, countWeekends, formatDate } from "./date.js";
-import { storeResult } from "./localStorage.js";
+import { storeResult, MAX_STORED_RESULTS } from "./localStorage.js";
 import { fetchCountriesData, getHolidaysByCountryAndYear } from "./api.js";
 import { showAlert } from "./alert.js";
 
@@ -23,8 +23,6 @@ const headerHoliddays = document.querySelector(".header-holiddays");
 const sortDdata = document.querySelector(".sort-data");
 export const countrySelect = document.querySelector(".country-select");
 export const yearSelect = document.querySelector(".year-select");
-
-export const MAX_STORED_RESULTS = 10;
 
 function activateInput() {
     if (startDateInput.value) {
